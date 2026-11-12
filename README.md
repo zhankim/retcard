@@ -8,11 +8,11 @@
 
 淘宝 / 抖音 / 小红书 / 拼多多 四套模板 · 纯离线渲染 · 无广告 · 无账号 · 无网络请求
 
-[![Release](https://img.shields.io/badge/release-v1.0.0-2b6cf6?style=flat-square)](#)
-[![Android](https://img.shields.io/badge/Android-6.0%2B-3ddc84?style=flat-square&logo=android&logoColor=white)](#)
-[![APK](https://img.shields.io/badge/APK-0.75%20MB-8b5cf6?style=flat-square)](#)
-[![No Trackers](https://img.shields.io/badge/trackers-0-success?style=flat-square)](#)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/badge/release-v1.0.0-2b6cf6?style=flat-square)(https://github.com/zhankim/retcard)
+[![Android](https://img.shields.io/badge/Android-6.0%2B-3ddc84?style=flat-square&logo=android&logoColor=white)(https://github.com/zhankim/retcard)
+[![APK](https://img.shields.io/badge/APK-0.75%20MB-8b5cf6?style=flat-square)(https://github.com/zhankim/retcard)
+[![No Trackers](https://img.shields.io/badge/trackers-0-success?style=flat-square)(https://github.com/zhankim/retcard)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/zhankim/retcard/blob/main/LICENSE)
 
 </div>
 
@@ -60,7 +60,7 @@
 
 ## 下载 / 安装
 
-前往 [Releases](#) 下载 `RetCard-1.0.apk`，或直接用仓库根目录里的成品：
+前往 [Releases(https://github.com/zhankim/retcard) 下载 `RetCard-1.0.apk`，或直接用仓库根目录里的成品：
 
 ```text
 RetCard-1.0.apk          0.75 MB
@@ -188,4 +188,4 @@ WebView 里 `drawImage()` 加载 `file://` 图片后，`canvas.toDataURL()` 直�
 
 ## License
 
-[MIT](LICENSE) © RetCard contributors
+[MIT](https://github.com/zhankim/retcard/blob/main/LICENSE) © RetCard contributors
