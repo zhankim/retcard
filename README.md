@@ -60,7 +60,7 @@
 
 ## 下载 / 安装
 
-前往 [Releases(https://github.com/zhankim/retcard) 下载 `RetCard-1.0.apk`，或直接用仓库根目录里的成品：
+前往 [Releases](https://github.com/zhankim/retcard/releases) 下载 `RetCard-1.0.apk`，或直接用仓库根目录里的成品：
 
 ```text
 RetCard-1.0.apk          0.75 MB
