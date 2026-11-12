@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>退货地址制卡</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">退</div>
+  <div class="titles">
+    <h1>退货地址制卡</h1>
+    <p>识别地址 · 生成退款截图 · 一键复制</p>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <div class="card-head">
+      <h2>1 · 粘贴退货信息</h2>
+      <button id="btnPaste" class="ghost">粘贴</button>
+    </div>
+    <textarea id="rawText" rows="5" placeholder="收货人：张三&#10;电话：13800138000&#10;地址：浙江省杭州市余杭区文一西路 969 号 2 幢 301 室"></textarea>
+    <button id="btnParse" class="primary">识别并填入</button>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2>2 · 选择平台模板</h2></div>
+    <div id="platformList" class="chips"></div>
+  </section>
+
+  <section id="parsedCard" class="card hidden">
+    <div class="card-head"><h2>3 · 核对信息</h2></div>
+    <label>姓名<input id="fName" type="text" placeholder="张三"></label>
+    <label>电话<input id="fPhone" type="tel" placeholder="13800138000"></label>
+    <label>地址<textarea id="fAddress" rows="3" placeholder="省市区 + 详细门牌"></textarea></label>
+    <div class="row">
+      <button id="btnGenerate" class="primary grow">生成退款截图</button>
+      <button id="btnCopy" class="secondary">复制地址</button>
+    </div>
+  </section>
+
+  <section id="preview" class="card hidden">
+    <div class="card-head">
+      <h2 id="previewHint">预览</h2>
+      <button id="btnSave" class="primary small">保存到相册</button>
+    </div>
+    <div class="canvas-wrap"><canvas id="canvas" class="hidden"></canvas></div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script src="images.js"></script>
+<script src="templates.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

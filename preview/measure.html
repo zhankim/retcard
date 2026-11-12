@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0}iframe{width:390px;height:900px;border:0}</style></head>
+<body>
+<iframe id="f" src="../app/assets/www/index.html"></iframe>
+<div id="log">pending</div>
+<script>
+document.getElementById("f").onload = function(){
+  try{
+    var d = document.getElementById("f").contentDocument;
+    var w = document.getElementById("f").contentWindow;
+    var out = ["vw=" + w.innerWidth];
+    ["body","main","header","section.card",".chips","#rawText",".topbar"].forEach(function(sel){
+      var el = d.querySelector(sel);
+      if(el){ var r = el.getBoundingClientRect(); out.push(sel + " w=" + r.width.toFixed(1) + " x=" + r.x.toFixed(1)+ " sw=" + el.scrollWidth); }
+    });
+    document.getElementById("log").textContent = "MEASURE " + out.join(" | ");
+  }catch(e){ document.getElementById("log").textContent = "MEASURE ERR " + e.message; }
+};
+</script></body></html>

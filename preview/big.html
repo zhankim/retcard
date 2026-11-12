@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>大图自检</title>
+<style>
+ body{margin:0;padding:12px;background:#eef1f6;font-family:"Microsoft YaHei",sans-serif}
+ .wrap{display:flex;gap:16px}
+ canvas{width:600px;height:auto;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+ h4{margin:0 0 6px;font-size:13px}
+</style></head>
+<body>
+<div class="wrap">
+  <div><h4>tb · 淘淘</h4><canvas id="c1"></canvas></div>
+  <div><h4>dy · 抖抖（描边=地址区）</h4><canvas id="c2"></canvas></div>
+  <div><h4>xhs · 红红</h4><canvas id="c3"></canvas></div>
+</div>
+<script src="../app/assets/www/images.js"></script>
+<script src="../app/assets/www/templates.js"></script>
+<script src="../app/assets/www/app.js"></script>
+<script>
+var SAMPLE = "收货人：张三\n电话：13800138000\n地址：浙江省杭州市余杭区文一西路969号2幢301室";
+window.addEventListener("load", function(){
+  var api = window.__retcard;
+  var p = api.parseAddressText(SAMPLE);
+  [["c1","tb"],["c2","dy"],["c3","xhs"]].forEach(function(x){
+    var cfg = api.TEMPLATE_CONFIGS[x[1]];
+    api.renderCard(document.getElementById(x[0]), cfg, p).then(function(c){
+      // 标出地址区矩形，便于检查溢出
+      var ctx=c.getContext("2d"), a=cfg.replace.address;
+      if(a.cover){ ctx.save(); ctx.strokeStyle="rgba(255,0,0,.45)"; ctx.lineWidth=3;
+        ctx.strokeRect(a.cover.x,a.cover.y,a.cover.w,a.cover.h); ctx.restore(); }
+    });
+  });
+});
+</script></body></html>

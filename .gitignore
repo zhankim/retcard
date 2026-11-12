@@ -1,0 +1,20 @@
+# build output
+build/
+preview/*.png
+
+# signing material — never commit private keys
+*.keystore
+*.jks
+*.p12
+
+# ide / os
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# scratch
+__pycache__/
+*.pyc
+node_modules/
