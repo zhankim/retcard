@@ -152,40 +152,6 @@ tb: {
 
 ---
 
-## 三个踩过的坑
-
-**1. `file://` 页面画本地图片会污染 canvas**
-
-WebView 里 `drawImage()` 加载 `file://` 图片后，`canvas.toDataURL()` 直接抛 `SecurityError`（opaque origin）。解法是把模板图转成 base64 内嵌进 `images.js`。
-
-**2. 中文路径喂给 java 工具必炸**
-
-`keytool` / `apksigner` 按平台编码解析参数，`菠萝包.keystore` 传进去变成乱码路径 → `FileNotFoundException`。做法是签名时用 ASCII 副本，签完再改回中文名。
-
-**3. 原模板的两处坐标假设**
-
-- `lastLineX` 本意是「整段只有一行时右移对齐」，多行时仍会生效，导致最后一行冲出画布 —— 改为仅单行时应用
-- 抖音模板的「复制」按钮与地址末行同 `y`，两行地址时会叠字 —— 改为始终落在末行下一行
-
----
-
-## 关于来源
-
-本项目的前端排版逻辑（字符折行、cover 遮盖、倒计时区间、复制按钮绘制）重写自一个公开可下载的电商退货地址制卡小程序客户端代码；原程序依赖的云开发后端、会员付费、激励广告、次数配额、邀请体系已全部剥离。
-
-本仓库不含任何服务端代码、密钥或用户数据，也不需要联网即可运行。
-
----
-
-## 已知边界
-
-- 字体走系统 CJK（Android 上是 Noto Sans CJK），与 iOS 的 PingFang SC 字形略有差异
-- 未包含京东模板（原程序里即为维护中状态，底图缺失）
-- 仅竖屏；地址超过模板 3 行会拒绝生成
-- 未做平板 / 折叠屏适配
-
----
-
 ## License
 
 [MIT](https://github.com/zhankim/retcard/blob/main/LICENSE) © RetCard contributors
