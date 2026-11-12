@@ -228,12 +228,32 @@
     var conf = cfg.replace.returnCountdown;
     if (!conf) return;
     var includeMinutes = conf.includeMinutes !== false;
-    var text = makeCountdownText(conf.minText, conf.maxText, conf.hourUnit || "小时", includeMinutes);
     applyFont(ctx, conf.textStyle);
+
     var maxWidth = ctx.measureText(conf.maxText).width;
-    if (ctx.measureText(text).width > maxWidth) throw new Error("退货倒计时文字不能长于原模板");
+    var text = null;
+    var picked = 0;
+
+    // 倒计时是随机值，不同数字在不同字体下宽度会有细微差异：
+    // 先重试若干次取一个放得下的值，避免因随机数直接拒绝出图。
+    for (var i = 0; i < 48; i++) {
+      var candidate = makeCountdownText(conf.minText, conf.maxText, conf.hourUnit || "小时", includeMinutes);
+      var w = ctx.measureText(candidate).width;
+      if (!text || w < picked) { text = candidate; picked = w; }
+      if (w <= maxWidth + 0.5) break;
+    }
+
+    // 仍放不下时按比例收字号（最低 78%），保证永远能出图
+    var style = conf.textStyle;
+    if (picked > maxWidth + 0.5 && picked > 0) {
+      var scale = Math.max(0.78, maxWidth / picked);
+      style = Object.assign({}, conf.textStyle, {
+        fontSize: Math.round(conf.textStyle.fontSize * scale * 10) / 10
+      });
+    }
+
     fillCover(ctx, conf.cover);
-    drawText(ctx, conf.textStyle, text);
+    drawText(ctx, style, text);
   }
 
   function drawAddressTB(ctx, addr, form) {
