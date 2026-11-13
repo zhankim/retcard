@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>countdown width probe</title></head>
+<body><div id="out">running</div>
+<script src="../app/assets/www/templates.js"></script>
+<script>
+function pad2(n){return String(n).padStart(2,"0");}
+function parseCountdown(t){
+  var m=/^(\d+)天(\d+)(小时|时)(?:(\d+)分)?$/.exec(String(t||""));
+  if(!m) throw new Error("bad "+t);
+  return {days:+m[1],hours:+m[2],unit:m[3],minutes:+(m[4]||0)};
+}
+function toMin(t){var p=parseCountdown(t);return p.days*1440+p.hours*60+p.minutes;}
+
+window.addEventListener("load", function(){
+  var c=document.createElement("canvas"); c.width=1200; c.height=100;
+  var ctx=c.getContext("2d");
+  var lines=[];
+  Object.keys(window.TEMPLATE_CONFIGS).forEach(function(k){
+    var cfg=window.TEMPLATE_CONFIGS[k];
+    var rc=cfg.replace.returnCountdown;
+    if(!rc) return;
+    var st=rc.textStyle;
+    ctx.font=(st.fontWeight||"400")+" "+(st.fontSize||40)+"px "+(st.fontFamily||"sans-serif");
+    ctx.textBaseline="top"; ctx.textAlign=st.align||"left";
+    var maxW=ctx.measureText(rc.maxText).width;
+    var minW=ctx.measureText(rc.minText).width;
+    var includeMin = rc.includeMinutes!==false;
+    var lo=toMin(rc.minText), hi=toMin(rc.maxText);
+    var worst=null, over=0, total=0;
+    var texts={};
+    if(includeMin){
+      for(var t=lo;t<=hi;t++){
+        var d=Math.floor(t/1440), h=Math.floor((t%1440)/60), mm=t%60;
+        var s=d+"天"+pad2(h)+(rc.hourUnit||"小时")+pad2(mm)+"分";
+        texts[s]=1;
+      }
+    } else {
+      for(var d2=parseCountdown(rc.minText).days; d2<=parseCountdown(rc.maxText).days; d2++){
+        for(var h2=0;h2<=26;h2++){
+          var s2=d2+"天"+pad2(h2)+(rc.hourUnit||"小时");
+          texts[s2]=1;
+        }
+      }
+    }
+    Object.keys(texts).forEach(function(s){
+      total++;
+      var w=ctx.measureText(s).width;
+      var drawn=w+((st.charSpacing||0)*(s.length-1));
+      if(w>maxW+0.01){ over++; if(!worst||w>worst.w) worst={s:s,w:w}; }
+    });
+    lines.push(k+": maxText="+rc.maxText+" maxW="+maxW.toFixed(2)+" minW="+minW.toFixed(2)
+      +" cases="+total+" over="+over+(worst?(" worst='"+worst.s+"' w="+worst.w.toFixed(2)):""));
+  });
+  document.getElementById("out").textContent="PROBE|"+lines.join(" ;; ");
+});
+</script></body></html>

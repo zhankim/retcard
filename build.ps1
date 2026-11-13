@@ -14,8 +14,6 @@ $KEYTOOL = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME "bin\keytool.exe" } el
 $P   = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $APP = Join-Path $P "app"
 $B   = Join-Path $P "build"
-$VER  = "1.1.0"
-$VCODE = 2
 
 Write-Host "[1/7] clean" -ForegroundColor Cyan
 Remove-Item (Join-Path $B "gen"), (Join-Path $B "classes"), (Join-Path $B "dex") -Recurse -Force -ErrorAction SilentlyContinue
@@ -25,7 +23,7 @@ Write-Host "[2/7] aapt2 compile" -ForegroundColor Cyan
 & (Join-Path $BT "aapt2.exe") compile --dir (Join-Path $APP "res") -o (Join-Path $B "res.zip")
 
 Write-Host "[3/7] aapt2 link" -ForegroundColor Cyan
-& (Join-Path $BT "aapt2.exe") link -o (Join-Path $B "base.apk") -I $AJ --manifest (Join-Path $APP "AndroidManifest.xml") -A (Join-Path $APP "assets") --java (Join-Path $B "gen") --min-sdk-version 23 --target-sdk-version 34 --version-code $VCODE --version-name $VER (Join-Path $B "res.zip")
+& (Join-Path $BT "aapt2.exe") link -o (Join-Path $B "base.apk") -I $AJ --manifest (Join-Path $APP "AndroidManifest.xml") -A (Join-Path $APP "assets") --java (Join-Path $B "gen") --min-sdk-version 23 --target-sdk-version 34 --version-code 1 --version-name "1.0" (Join-Path $B "res.zip")
 
 Write-Host "[4/7] javac" -ForegroundColor Cyan
 & $JAVAC -nowarn -encoding UTF-8 -source 8 -target 8 -bootclasspath $AJ -classpath $AJ -d (Join-Path $B "classes") (Join-Path $APP "java\com\pineapple\retcard\MainActivity.java") (Join-Path $B "gen\com\pineapple\retcard\R.java")
@@ -55,7 +53,7 @@ $ks = Join-Path $P "pineapple.keystore"
 if (-not (Test-Path $ks)) {
   & $KEYTOOL -genkeypair -keystore $ks -alias pineapple -keyalg RSA -keysize 2048 -validity 10950 -storepass pineapple123 -keypass pineapple123 -dname "CN=Pineapple,OU=RetCard,O=Pineapple,L=Shanghai,ST=Shanghai,C=CN"
 }
-& (Join-Path $BT "apksigner.bat") sign --ks $ks --ks-key-alias pineapple --ks-pass pass:pineapple123 --key-pass pass:pineapple123 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --out (Join-Path $P "RetCard-$VER.apk") (Join-Path $B "aligned.apk")
-& (Join-Path $BT "apksigner.bat") verify --print-certs (Join-Path $P "RetCard-$VER.apk")
+& (Join-Path $BT "apksigner.bat") sign --ks $ks --ks-key-alias pineapple --ks-pass pass:pineapple123 --key-pass pass:pineapple123 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --out (Join-Path $P "RetCard-1.0.apk") (Join-Path $B "aligned.apk")
+& (Join-Path $BT "apksigner.bat") verify --print-certs (Join-Path $P "RetCard-1.0.apk")
 
-Write-Host "done -> RetCard-$VER.apk" -ForegroundColor Green
+Write-Host "done -> RetCard-1.0.apk" -ForegroundColor Green
