@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>退货地址制卡</title>
+<title>退货信息卡</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
 <header class="topbar">
   <div class="logo">退</div>
   <div class="titles">
-    <h1>退货地址制卡</h1>
-    <p>识别地址 · 生成退款截图 · 一键复制</p>
+    <h1>退货信息卡</h1>
+    <p>识别地址 · 生成卡片 · 一键复制</p>
   </div>
 </header>
 
@@ -27,17 +27,18 @@
   </section>
 
   <section class="card">
-    <div class="card-head"><h2>2 · 选择平台模板</h2></div>
-    <div id="platformList" class="chips"></div>
+    <div class="card-head"><h2>2 · 选择卡片样式</h2></div>
+    <div id="themeList" class="chips"></div>
   </section>
 
   <section id="parsedCard" class="card hidden">
     <div class="card-head"><h2>3 · 核对信息</h2></div>
-    <label>姓名<input id="fName" type="text" placeholder="张三"></label>
-    <label>电话<input id="fPhone" type="tel" placeholder="13800138000"></label>
-    <label>地址<textarea id="fAddress" rows="3" placeholder="省市区 + 详细门牌"></textarea></label>
+    <label>收件人<input id="fName" type="text" placeholder="张三"></label>
+    <label>联系电话<input id="fPhone" type="tel" placeholder="13800138000"></label>
+    <label>寄回地址<textarea id="fAddress" rows="3" placeholder="省市区 + 详细门牌"></textarea></label>
+    <label>寄回期限（天）<input id="fDays" type="number" min="1" max="90" value="7"></label>
     <div class="row">
-      <button id="btnGenerate" class="primary grow">生成退款截图</button>
+      <button id="btnGenerate" class="primary grow">生成退货卡</button>
       <button id="btnCopy" class="secondary">复制地址</button>
     </div>
   </section>
@@ -53,8 +54,7 @@
 
 <div id="toast" class="toast"></div>
 
-<script src="images.js"></script>
-<script src="templates.js"></script>
+<script src="themes.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
